@@ -8,10 +8,10 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
 function articleData(kanap) {
     console.log({kanap})
-    const _id = kanap._id
     const name = kanap.name
     const altTXT = kanap.altTXT
     const colors = kanap.colors
+    const color = kanap.color
     const price = kanap.price
     const description = kanap.description
     const imageUrl = kanap.imageUrl
@@ -19,7 +19,8 @@ function articleData(kanap) {
     putTitle(name)
     putPrice(price)
     putDescription(description)
-    putSettings(colors)
+    putColors(colors)
+
 }
 
 function putImage(imageUrl, altTXT) {
@@ -45,7 +46,16 @@ function putDescription (description) {
     if (p != null) p.textContent = description
 }
 
-function putSettings (colors) {
-    const select = document.querySelector("#colors")
-    if (select != null) select.textContent = colors
-}
+function putColors(colors) {
+    const select = document.querySelector("#colors")         
+    if (select != null) {
+        colors.forEach((color) => {
+            const option = document.createElement("option")
+            option.value = color
+            option.textContent = color                        
+            select.appendChild(option)
+            
+        })
+    }
+
+}       
