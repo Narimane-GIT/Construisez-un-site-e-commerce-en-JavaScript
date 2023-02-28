@@ -1,6 +1,9 @@
 const paramsString = window.location.search
 const searchParams = new URLSearchParams(paramsString)
-const id = searchParams.get("id");
+const id = searchParams.get("id")
+if (id != null) {
+    let image, title, descriptions
+}
 
 fetch(`http://localhost:3000/api/products/${id}`)
 .then(response => response.json())
@@ -15,6 +18,9 @@ function articleData(kanap) {
     const price = kanap.price
     const description = kanap.description
     const imageUrl = kanap.imageUrl
+    image = imageUrl
+    title =name
+    descriptions = description
     putImage(imageUrl, altTXT)
     putTitle(name)
     putPrice(price)
@@ -59,3 +65,29 @@ function putColors(colors) {
     }
 
 }       
+
+const button = document.querySelector("#addToCart")
+if (button != null) {
+    button.addEventListener("click", (e) => {
+        const color = document.querySelector("#colors").value
+        const quantity =document.querySelector("#quantity").value
+        if (color == null || color === "" || quantity == null || quantity == 0) {
+            alert("SVP, choisissez une couleur et une quantité")
+            return 
+        }
+        cartSave(color, quantity)
+        window.location.href = "cart.html"
+    }
+    )
+} 
+function cartSave(color, quantity) {
+    const donnees = {
+      id: id,
+      imageUrl: image,
+      name: title,
+      description: descriptions,
+      color: color,
+      quantity: quantity,
+    }
+    localStorage.setItem(id, JSON.stringify(donnees))
+}
