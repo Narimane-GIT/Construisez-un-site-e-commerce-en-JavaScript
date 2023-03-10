@@ -1,6 +1,9 @@
+//récupérer l'identifiant du produit dans l'URL
 const paramsString = window.location.search
 const searchParams = new URLSearchParams(paramsString)
 const id = searchParams.get("id")
+
+// vérification que l'identifiant existe, puis appel de la fonction articleData
 if (id != null) {
     let image, title, descriptions
 }
@@ -9,6 +12,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
 .then(response => response.json())
 .then((res) => articleData(res))
 
+// Affichage des données du produit
 function articleData(kanap) {
     console.log({kanap})
     const name = kanap.name
@@ -29,6 +33,7 @@ function articleData(kanap) {
 
 }
 
+// Ajout de l'image du produit
 function putImage(imageUrl, altTXT) {
     const image = document.createElement("img")
     image.src = imageUrl
@@ -37,21 +42,26 @@ function putImage(imageUrl, altTXT) {
     if (parent != null) parent.appendChild(image)
 
 } 
+
+// Ajout du titre du produit
 function putTitle(name) {
     const h1 = document.querySelector("#title")
     if (h1 != null) h1.textContent = name
 }
- 
+
+// Ajout du prix du produit 
 function putPrice(price) {
     const span = document.querySelector("#price")
     if (span != null) span.textContent = price
 }
 
+// Ajout de la description du produit
 function putDescription (description) {
     const p = document.querySelector("#description")
     if (p != null) p.textContent = description
 }
 
+// Ajout des couleurs disponibles du produit
 function putColors(colors) {
     const select = document.querySelector("#colors")         
     if (select != null) {
@@ -66,6 +76,7 @@ function putColors(colors) {
 
 }       
 
+// Ajout du produit au panier lors du clic sur le bouton "Ajouter au panier"
 const button = document.querySelector("#addToCart")
 if (button != null) {
     button.addEventListener("click", (e) => {
@@ -80,6 +91,8 @@ if (button != null) {
     }
     )
 } 
+
+// Enregistrement des données du produit ajouté au panier dans le stockage local du navigateur
 function cartSave(color, quantity) {
     const donnees = {
       id: id,
